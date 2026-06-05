@@ -1,52 +1,51 @@
 @echo off
-chcp 65001 >nul
 setlocal enabledelayedexpansion
 
 echo.
-echo MULTILINGUAL VOICE TRANSCRIBER v2.0 - KURULUM
+echo MULTILINGUAL VOICE TRANSCRIBER v2.0 - SETUP
 echo.
 
 net session >nul 2>&1
 if errorlevel 1 (
-    echo HATA: Yonetici izni gerekli!
+    echo ERROR: Admin rights required!
     echo.
-    echo Lutfen sag tiklayip "Yonetici olarak calistir" secin.
+    echo Right-click this file and select "Run as administrator"
     echo.
     pause
     exit /b 1
 )
 
-echo Adim 1: Python denetleniyor...
+echo Step 1: Checking Python...
 python --version >nul 2>&1
 if errorlevel 1 (
-    echo Python yükleniyor...
+    echo Python not found. Installing...
     powershell -Command "(New-Object Net.WebClient).DownloadFile('https://www.python.org/ftp/python/3.11.7/python-3.11.7-amd64.exe', 'python-installer.exe')"
     python-installer.exe /quiet InstallAllUsers=1 PrependPath=1
     del python-installer.exe
-    echo Python kuruldu.
+    echo Python installed.
 ) else (
-    echo Python zaten kurulu.
+    echo Python already installed.
 )
 echo.
 
-echo Adim 2: Sanal ortam olusturuluyor...
+echo Step 2: Creating virtual environment...
 if exist venv (
-    echo Sanal ortam zaten mevcut.
+    echo Virtual environment already exists.
 ) else (
     python -m venv venv
     if errorlevel 1 (
-        echo HATA: Sanal ortam olusturulamadi!
+        echo ERROR: Failed to create virtual environment!
         pause
         exit /b 1
     )
-    echo Sanal ortam olusturuldu.
+    echo Virtual environment created.
 )
 echo.
 
-echo Adim 3: Paketler yukleniyor...
+echo Step 3: Installing packages...
 call venv\Scripts\activate.bat
 if errorlevel 1 (
-    echo HATA: Sanal ortam etkinlestirilemedi!
+    echo ERROR: Failed to activate virtual environment!
     pause
     exit /b 1
 )
@@ -54,38 +53,38 @@ if errorlevel 1 (
 pip install --upgrade pip setuptools wheel >nul 2>&1
 pip install -r requirements.txt
 if errorlevel 1 (
-    echo HATA: Paketler yuklenemedi!
+    echo ERROR: Failed to install packages!
     pause
     exit /b 1
 )
-echo Paketler yuklendi.
+echo Packages installed.
 echo.
 
-echo Adim 4: Modeller indiriliyor (5-20 dakika - internetin hizli olmali)...
+echo Step 4: Downloading AI models (5-20 minutes)...
 mkdir models >nul 2>&1
-python -c "import whisper; print('Whisper yukleniyor...'); whisper.load_model('large-v3'); print('Tamamlandi.')"
+python -c "import whisper; print('Downloading Whisper...'); whisper.load_model('large-v3'); print('Done.')"
 if errorlevel 1 (
-    echo Uyari: Modeller indirilemedi. Internet baglantisini kontrol edin.
+    echo WARNING: Failed to download models. Check internet connection.
 )
 echo.
 
-echo Adim 5: Son ayarlar yapiliiyor...
+echo Step 5: Final setup...
 mkdir output >nul 2>&1
 mkdir logs >nul 2>&1
 echo.
 
 echo.
 echo ============================================================
-echo KURULUM TAMAMLANDI!
+echo SETUP COMPLETE!
 echo ============================================================
 echo.
-echo Programi baslatmak icin:
+echo To start the program:
 echo.
-echo 1. GUI (Tavsiye):
-echo    run_gui.bat dosyasina cift tikla
+echo 1. GUI (Recommended):
+echo    Double-click run_gui.bat
 echo.
-echo 2. Komut Satiri:
-echo    run_cli.bat dosyasina cift tikla
+echo 2. Command Line:
+echo    Double-click run_cli.bat
 echo.
 echo ============================================================
 echo.
