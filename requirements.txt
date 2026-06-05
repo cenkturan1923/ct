@@ -1,0 +1,44 @@
+# Audio Processing
+librosa==0.10.0
+soundfile==0.12.1
+numpy==1.24.3
+scipy==1.11.0
+
+# Speech Recognition & Transcription
+openai-whisper==20240314
+torch==2.1.2+cu118
+torchvision==0.16.2+cu118
+torchaudio==2.1.2+cu118
+
+# Speaker Diarization
+pyannote.audio==3.1.1
+pyannote.core==5.0.0
+pyannote.database==5.0.0
+
+# Language Detection & Translation
+langdetect==1.0.9
+google-translate-offline==1.0.0
+translate==3.6.0
+
+# GUI
+PyQt6==6.6.1
+PyQt6-sip==13.6.0
+
+# CLI & Utils
+click==8.1.7
+colorama==0.4.6
+tqdm==4.66.1
+pyyaml==6.0.1
+pydantic==2.5.0
+python-dotenv==1.0.0
+
+# File Handling
+pandas==2.1.3
+openpyxl==3.1.2
+python-pptx==0.6.21
+
+# Logging & Monitoring
+loguru==0.7.2
+
+# Performance
+numba==0.58.0

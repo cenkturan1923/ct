@@ -1,0 +1,51 @@
+# Yazı Dönüştürücü Yapılandırması
+
+# Whisper Modeli
+whisper:
+  model: "large-v3"  # large-v3 (en yüksek doğruluk)
+  device: "auto"     # auto, cuda, cpu
+  language: "auto"   # auto, tr, ckb, kmr, ar
+  temperature: 0.0   # Deterministic output
+  condition_on_previous_text: true
+
+# Speaker Diarization (Kişi Ayrımı)
+diarization:
+  enabled: true
+  model: "pyannote/speaker-diarization-3.1"
+  device: "auto"
+  min_speakers: 1
+  max_speakers: 10
+
+# Çeviri Ayarları
+translation:
+  enabled: true
+  target_language: "tr"  # Türkçe
+  translate_languages: ["ar", "ku", "ckb", "kmr"]
+
+# Ses İşleme
+audio:
+  sample_rate: 16000  # Hz
+  channels: 1         # Mono
+  chunk_duration: 30  # Saniye (bellekten tasarruf)
+
+# Çıkış Formatları
+output:
+  formats:
+    - "txt"   # Basit metin
+    - "json"  # Yapılandırılmış veri
+    - "srt"   # Altyazı
+  directory: "output"
+  timestamp: true  # Dosya adında zaman damgası
+
+# Günlüğü Ayarları
+logging:
+  level: "INFO"  # DEBUG, INFO, WARNING, ERROR
+  file: "logs/app.log"
+  rotation: "500 MB"
+  retention: "10 days"
+
+# GPU Ayarları
+gpu:
+  enabled: true
+  cuda_memory_fraction: 0.9  # GPU belleğinin %90'ını kullan
+  torch_num_threads: -1      # Otomatik
